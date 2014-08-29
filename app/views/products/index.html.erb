@@ -2,7 +2,7 @@
 
 <div class="all_products">
   <% @products.each do |p| %>
-    <h2><%= link_to p.name, p %></h2><h5><%= number_to_currency(p.price_in_cents / 100) %> and small blood sacrifice</h5> 
+    <h2><%= link_to p.name, p %></h2><h5>$<%= p.formatted_price %> and small blood sacrifice</h5> 
     <p><%= p.description %></p><br>
     <p><%= link_to "See more…", p %></p>
   <% end %>

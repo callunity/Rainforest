@@ -1,11 +1,23 @@
 <%= form_for @product do |p| %>
-  <%= p.label "name" %>
+  <% if @product.errors.any? %>
+  <div id="error_explanation">
+    <h3><%= pluralize(@product.errors.count, "error") %> prevented this product from being saved:</h3>
+
+    <ul>
+      <% @product.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+      <% end %>
+    </ul>
+  </div>
+  <% end %>
+
+  <%= p.label :name %>
   <%= p.text_field :name %><br>
 
-  <%= p.label "price in cents" %>
+  <%= p.label :price_in_cents %>
   <%= p.text_field :price_in_cents %><br>
 
-  <%= p.label "description" %>
+  <%= p.label :description %>
   <%= p.text_area :description %><br>
 
   <%= p.submit "Submit" %>
