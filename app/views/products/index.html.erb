@@ -2,7 +2,8 @@
 
 <div class="all_products">
   <% @products.each do |p| %>
-    <h2><%= link_to p.name, p %></h2><h5>$<%= p.formatted_price %> and small blood sacrifice</h5> 
+    <h2><%= link_to p.name, p %></h2>
+    <h5>$<%= p.formatted_price %></h5> 
     <p><%= p.description %></p>
     <p><%= link_to "See more…", p %></p><br>
   <% end %>
