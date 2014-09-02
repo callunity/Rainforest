@@ -1,6 +1,15 @@
 <h1><%= @product.name %></h1>
 <h4>$<%= @product.formatted_price %></h4>
 <p><%= @product.description %></p>
+<h4>Reviews</h4>
+  <% if @product.reviews.count == 0 %>
+    This product has no reviews yet. <%= link_to "Be the first to review this item.", new_review_path(@product) %>
+  <% else %>
+    <% @product.reviews.each do |r| %>
+      <%= r.user.email %>
+      <%= r.comment %>
+    <% end %>
+  <% end %>
 
 <p><%= link_to "Edit Product", edit_product_path %>&nbsp;&nbsp;&nbsp;&nbsp;<%= link_to "Delete Product", @product, :method => :delete %></p>
 <p><%= link_to "Back to all Products", products_path %></p>

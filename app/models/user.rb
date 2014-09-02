@@ -3,4 +3,7 @@ class User < ActiveRecord::Base
 
   validates :email, presence: true
   validates :password, length: 8..20
+
+  has_many :reviews
+  has_many :products, through: :reviews
 end

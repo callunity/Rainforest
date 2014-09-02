@@ -5,6 +5,7 @@
     <h2><%= link_to p.name, p %></h2>
     <h5>$<%= p.formatted_price %></h5> 
     <p><%= p.description %></p>
+    <p><%= p.reviews.count %> reviews</p>
     <p><%= link_to "See more…", p %></p><br>
   <% end %>
 </div>
