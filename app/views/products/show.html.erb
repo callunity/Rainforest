@@ -5,14 +5,20 @@
 <h3>Reviews</h3>
   <% if @product.reviews.count > 0 %>
     <% @product.reviews.each do |review| %>
-      <p><strong><%= review.user.email if review.user != nil %></strong><br>
-      <%= review.comment %><br>
-      <em>Added on <%= review.created_at %></em></p>
+      <p><% if review.user != nil %>
+        <strong><%= review.user.first_name %> <%= review.user.last_name %></strong><br>
+        <%= review.comment %><br>
+        <em>Added on <%= review.created_at.to_date %></em>
+        <% if review.user == current_user %>
+          <%= link_to "Delete review", [@product, review], :method => :delete %>
+        <% end %></p>
+      <% end %>
     <% end %>
   <% else %>
     <p>This product has no reviews yet.</p>
   <% end %>
-<h4>Add a review</h4>
+
+<h4>Add a review:</h4>
   <% if current_user %>
     <%= form_for([@product, @review]) do |f| %>
       <% if @review.errors.any? %>
@@ -32,7 +38,7 @@
       <div class="actions"><%= f.submit "Submit" %></div>
     <% end %>
   <% else %> 
-    <p><%= link_to "Sign up", new_user_path %> or <%= link_to "log in", new_session_path %> to add a <%= @product.reviews.count %> review for this product.</p>
+    <p><%= link_to "Sign up", new_user_path %> or <%= link_to "log in", new_session_path %> to add a review for this product.</p>
   <% end %>
 
 

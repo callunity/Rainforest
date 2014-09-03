@@ -1,4 +1,6 @@
 class ProductsController < ApplicationController
+  before_action :ensure_logged_in, only: [:create, :edit, :update, :destroy]
+
   def index
     @products = Product.all
     @user = User.find_by(session[:user_id])

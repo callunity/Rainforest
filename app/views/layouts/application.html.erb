@@ -16,7 +16,7 @@
 
   <p class="user_info">
   <% if current_user %>
-    Welcome, <%= current_user.email %>! <%= link_to "Log out", session_path("current"), :method => :delete %>
+    Welcome, <%= current_user.first_name.capitalize %>! <%= link_to "Log out", session_path("current"), :method => :delete %>
     <% else %>
       <%= link_to "Sign up", new_user_path %> or <%= link_to "Log in", new_session_path %>
     <% end %>
