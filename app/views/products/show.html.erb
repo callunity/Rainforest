@@ -2,11 +2,12 @@
 <h4>$<%= @product.formatted_price %></h4>
 <p><%= @product.description %></p>
 
+<div class="reviews">
 <h3>Reviews</h3>
   <% if @product.reviews.count > 0 %>
     <% @product.reviews.each do |review| %>
       <p><% if review.user != nil %>
-        <strong><%= review.user.first_name %> <%= review.user.last_name %></strong><br>
+        <strong><%= link_to ("#{review.user.first_name} #{review.user.last_name}"), user_path(review.user) %></strong><br>
         <%= review.comment %><br>
         <em>Added on <%= review.created_at.to_date %></em>
         <% if review.user == current_user %>
@@ -17,13 +18,13 @@
   <% else %>
     <p>This product has no reviews yet.</p>
   <% end %>
+</div>
 
 <h4>Add a review:</h4>
   <% if current_user %>
     <%= form_for([@product, @review]) do |f| %>
       <% if @review.errors.any? %>
         <div class="error_messages">
-          <h2>Please try again</h2>
           <ul>
             <% for message in @review.errors.full_messages %>
             <li><%= message %></li>

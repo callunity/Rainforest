@@ -1,1 +1,17 @@
-<h1><%= @user.first_name %> <%= @user.last_name %></h1>
+<h1><%= @user.first_name.capitalize %> <%= @user.last_name.capitalize %></h1>
+<h5>Est. <%= @user.created_at.to_date %></h5>
+
+<h3>Reviews</h3>
+
+<p><%= @user.first_name.capitalize %> has reviewed <%= @user.reviews.count %> <%= "product".pluralize(@user.reviews.count) %>.</p>
+
+<div class="reviews">
+  <% if @user.reviews.count > 0 %>
+    <% @user.reviews.each do |review| %>
+      <p><strong><%= link_to review.product.name, product_path(review.product) %></strong><br>
+      <%= review.comment %></p>
+    <% end %>
+  <% end %>
+</div>
+
+<%= link_to "Back to all products", products_path %>
