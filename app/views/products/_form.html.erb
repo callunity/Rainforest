@@ -22,5 +22,6 @@
     <%= p.label :description %><br>
     <%= p.text_area :description %>
   </div>
-  <div class="actions"><%= p.submit "Submit" %></div>
+  <div class="actions"><%= p.submit "Submit" %></div><br>
+  <%= link_to "Back to all products", products_path %>
 <% end %>

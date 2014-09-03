@@ -7,5 +7,6 @@ class User < ActiveRecord::Base
   validates :password, length: 8..20
 
   has_many :reviews, dependent: :destroy
-  has_many :products, through: :reviews
+  has_many :products
+  has_many :reviewed_products, class_name: "Product", through: :reviews
 end
