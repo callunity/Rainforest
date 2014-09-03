@@ -1,15 +1,41 @@
 <h1><%= @product.name %></h1>
 <h4>$<%= @product.formatted_price %></h4>
 <p><%= @product.description %></p>
-<h4>Reviews</h4>
-  <% if @product.reviews.count == 0 %>
-    This product has no reviews yet. <%= link_to "Be the first to review this item.", new_review_path(@product) %>
-  <% else %>
-    <% @product.reviews.each do |r| %>
-      <%= r.user.email %>
-      <%= r.comment %>
+
+<h3>Reviews</h3>
+  <% if @product.reviews.count > 0 %>
+    <% @product.reviews.each do |review| %>
+      <p><strong><%= review.user.email if review.user != nil %></strong><br>
+      <%= review.comment %><br>
+      <em>Added on <%= review.created_at %></em></p>
     <% end %>
+  <% else %>
+    <p>This product has no reviews yet.</p>
   <% end %>
+<h4>Add a review</h4>
+  <% if current_user %>
+    <%= form_for([@product, @review]) do |f| %>
+      <% if @review.errors.any? %>
+        <div class="error_messages">
+          <h2>Please try again</h2>
+          <ul>
+            <% for message in @review.errors.full_messages %>
+            <li><%= message %></li>
+            <% end %>
+          </ul>
+        </div> 
+      <% end %>
+      <div class="field">
+        <%= f.label :comment %>
+        <%= f.text_area :comment %>
+      </div>
+      <div class="actions"><%= f.submit "Submit" %></div>
+    <% end %>
+  <% else %> 
+    <p><%= link_to "Sign up", new_user_path %> or <%= link_to "log in", new_session_path %> to add a <%= @product.reviews.count %> review for this product.</p>
+  <% end %>
+
+
 
 <p><%= link_to "Edit Product", edit_product_path %>&nbsp;&nbsp;&nbsp;&nbsp;<%= link_to "Delete Product", @product, :method => :delete %></p>
 <p><%= link_to "Back to all Products", products_path %></p>
