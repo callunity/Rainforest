@@ -2,27 +2,14 @@
 <h4>$<%= @product.formatted_price %></h4>
 <p><%= @product.description %></p>
 
-<div class="reviews">
 <h3>Reviews</h3>
-  <% if @product.reviews.count > 0 %>
-    <% @product.reviews.each do |review| %>
-      <p><% if review.user != nil %>
-        <strong><%= link_to ("#{review.user.first_name} #{review.user.last_name}"), user_path(review.user) %></strong><br>
-        <%= review.comment %><br>
-        <em>Added on <%= review.created_at.to_date %></em>
-        <% if review.user == current_user %>
-          <%= link_to "Delete review", [@product, review], :method => :delete %>
-        <% end %></p>
-      <% end %>
-    <% end %>
-  <% else %>
-    <p>This product has no reviews yet.</p>
-  <% end %>
+<div class="reviews">
+  <%= render :partial => 'reviews/review' %>
 </div>
 
 <h4>Add a review:</h4>
   <% if current_user %>
-    <%= form_for([@product, @review]) do |f| %>
+    <%= form_for([@product, @review], :remote => true) do |f| %>
       <% if @review.errors.any? %>
         <div class="error_messages">
           <ul>
@@ -44,7 +31,8 @@
 
 
 
-<p><% if @product.user_id == current_user.id %>
+<p><% if current_user %>
+  <% if @product.user_id == current_user.id %>
   <%= link_to "Edit Product", edit_product_path %>&nbsp;&nbsp;&nbsp;&nbsp;<%= link_to "Delete Product", @product, :method => :delete %>
-<% end %></p>
+<% end %><% end %></p>
 <p><%= link_to "Back to all Products", products_path %></p>

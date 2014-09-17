@@ -1,0 +1,2 @@
+$('.all_products').append("<%= j(render @products) %>");
+$('.pagination').replaceWith("<%= j(paginate @products) %>");

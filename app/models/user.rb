@@ -9,4 +9,5 @@ class User < ActiveRecord::Base
   has_many :reviews, dependent: :destroy
   has_many :products
   has_many :reviewed_products, class_name: "Product", through: :reviews
+
 end

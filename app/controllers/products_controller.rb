@@ -1,14 +1,23 @@
 class ProductsController < ApplicationController
   before_action :ensure_logged_in, only: [:create, :edit, :update, :destroy]
+  before_filter :product_find, only: [:show, :edit, :update, :destroy]
 
   def index
-    @products = Product.all
+    @products = if params[:search] 
+      Product.where('LOWER(name) LIKE LOWER(?)', "%#{params[:search]}%")
+    else
+      Product.order('products.created_at DESC').page(params[:page])
+    end
+
+    respond_to do |format|
+      format.html
+      format.js
+    end
+
     @user = User.find_by(session[:user_id])
   end
 
   def show
-    @product = Product.find(params[:id])
-
     if current_user
       @review = @product.reviews.build
     end
@@ -19,7 +28,7 @@ class ProductsController < ApplicationController
   end
 
   def edit
-    @product = Product.find(params[:id])
+
   end
 
   def create
@@ -29,21 +38,19 @@ class ProductsController < ApplicationController
     if @product.save
       redirect_to product_path(@product)
     else
-      render :new
+      render :new, alert: "Something went wrong!"
     end
   end
 
   def update
-    @product = Product.find(params[:id])
     if @product.update_attributes(product_params)
       redirect_to product_path(@product)
     else 
-      render :edit
+      render :edit, alert: "Something went wrong!"
     end
   end
 
   def destroy
-    @product = Product.find(params[:id])
     @product.destroy
     redirect_to products_path
 
@@ -52,5 +59,9 @@ class ProductsController < ApplicationController
   private
   def product_params
     params.require(:product).permit(:name, :description, :price_in_cents)
+  end
+
+  def product_find
+    @product = Product.find(params[:id])
   end
 end
