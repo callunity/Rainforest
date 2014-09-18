@@ -1,18 +1,20 @@
-<h1>All Products</h1>
+<h1><%= link_to "All Products", products_path %></h1>
 
 <%= form_tag products_path, method: :get, id: 'search-form' do %>
   <%= text_field_tag :search, params[:search] %>
   <%= submit_tag "Search!" %>
 <% end %>
 
-<div class="all_products">
-  <%= render @products %>
+<div id="new_product_div"><% if current_user %>
+  <h3><%= link_to("Add new product", new_product_path, id: "add_new_product") %></h3>
+  <div id="product_form" >
+    <%= render partial: 'form', locals: {product: Product.new} %>
+  </div>
+  <% end %>
 </div>
 
-
-<p><% if current_user %>
-  <%= link_to "Add new product", new_product_path %>
-  <% end %>
-</p>
+<div id="all_products">
+  <%= render @products || "No products match that search!" %>
+</div>
 
 <%= paginate @products %>

@@ -3,36 +3,23 @@
 <p><%= @product.description %></p>
 
 <h3>Reviews</h3>
-<div class="reviews">
-  <%= render :partial => 'reviews/review' %>
+<div id="reviews">
+  <% if reviews.count > 0 %>
+    <%= render @reviews %>
+  <% end %>
 </div>
 
 <h4>Add a review:</h4>
-  <% if current_user %>
-    <%= form_for([@product, @review], :remote => true) do |f| %>
-      <% if @review.errors.any? %>
-        <div class="error_messages">
-          <ul>
-            <% for message in @review.errors.full_messages %>
-            <li><%= message %></li>
-            <% end %>
-          </ul>
-        </div> 
-      <% end %>
-      <div class="field">
-        <%= f.label :comment %><br>
-        <%= f.text_area :comment %>
-      </div>
-      <div class="actions"><%= f.submit "Submit" %></div>
-    <% end %>
-  <% else %> 
-    <p><%= link_to "Sign up", new_user_path %> or <%= link_to "log in", new_session_path %> to add a review for this product.</p>
-  <% end %>
+<% if current_user %>
+  <%= render :partial => 'reviews/form', locals: {product: @product, review: @new_review} %>
+<% else %> 
+  <p><%= link_to "Sign up", new_user_path %> or <%= link_to "log in", new_session_path %> to add a review for this product.</p>
+<% end %>
 
 
 
 <p><% if current_user %>
   <% if @product.user_id == current_user.id %>
-  <%= link_to "Edit Product", edit_product_path %>&nbsp;&nbsp;&nbsp;&nbsp;<%= link_to "Delete Product", @product, :method => :delete %>
+  <%= link_to "Edit Product", edit_product_path(@product) %>&nbsp;&nbsp;&nbsp;&nbsp;<%= link_to "Delete Product", @product, :method => :delete %>
 <% end %><% end %></p>
 <p><%= link_to "Back to all Products", products_path %></p>

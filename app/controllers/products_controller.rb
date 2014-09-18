@@ -4,23 +4,29 @@ class ProductsController < ApplicationController
 
   def index
     @products = if params[:search] 
-      Product.where('LOWER(name) LIKE LOWER(?)', "%#{params[:search]}%")
+      Product.where('LOWER(name) LIKE LOWER(?)', "%#{params[:search]}%").page(params[:page])
     else
       Product.order('products.created_at DESC').page(params[:page])
     end
 
-    respond_to do |format|
-      format.html
-      format.js
-    end
+    respond_to :html, :js
+
+    @product = Product.new
 
     @user = User.find_by(session[:user_id])
   end
 
   def show
+    @reviews = Product.find(params[:id]).reviews
+
     if current_user
-      @review = @product.reviews.build
+      @new_review = @product.reviews.build
     end
+
+    respond_to do |format|
+      format.html 
+      format.js
+    end    
   end
 
   def new
@@ -36,10 +42,17 @@ class ProductsController < ApplicationController
     @product.user_id = current_user.id
 
     if @product.save
-      redirect_to product_path(@product)
+      respond_to do |format|
+        format.html {
+          redirect_to product_path(@product)
+        }
+        format.js
+      end
     else
       render :new, alert: "Something went wrong!"
     end
+
+
   end
 
   def update

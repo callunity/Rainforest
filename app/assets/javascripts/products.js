@@ -1,16 +1,5 @@
 $(document).on('ready page:load', function() {
-  $('#search-form').submit(function(e) {
-    e.preventDefault();
-    var searchValue = $('#search').val();
-    
-    $.getScript('/products?search=' + searchValue)
-      .done();
-  });
-
- // $('FORMMMMM').submit(function(e) {
-  //   e.preventDefault();
-
-  // });
+  $('#product_form').hide();
 
   if ( $('.pagination').length ) {
     $(window).scroll(function() {
@@ -21,5 +10,30 @@ $(document).on('ready page:load', function() {
       }
     });
   };
+
+  $('#search-form').on('submit',function(e) {
+    e.preventDefault();
+    var searchValue = $('#search').val();
+    
+    $.getScript('/products?search=' + searchValue)
+    .done(function(data) {
+      $('#all_products').html(data);
+    });
+  });
+
+  $('#add_new_product').on('click', function(e) {
+    e.preventDefault();
+
+    $('#product_form').toggle();
+  });
+
+
+
+  $('#submit_review').on('click', function(e) {
+    e.preventDefault();
+
+    $('#reviews').toggle();
+  });
+
 
 });

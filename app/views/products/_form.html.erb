@@ -1,16 +1,16 @@
-<%= form_for(@product, :remote => true) do |p| %>
-  <% if @product.errors.any? %>
+<%= form_for(product, :remote => true, id: "new_product") do |p| %>
+  <% if product.errors.any? %>
   <div id="error_explanation">
-    <h3><%= pluralize(@product.errors.count, "error") %> prevented this product from being saved:</h3>
+    <h3><%= pluralize(product.errors.count, "error") %> prevented this product from being saved:</h3>
 
     <ul>
-      <% @product.errors.full_messages.each do |msg| %>
+      <% product.errors.full_messages.each do |msg| %>
       <li><%= msg %></li>
       <% end %>
     </ul>
   </div>
   <% end %>
-  
+
   <div class="field">
     <%= p.label :name %><br>
     <%= p.text_field :name %>
@@ -23,6 +23,5 @@
     <%= p.label :description %><br>
     <%= p.text_area :description %>
   </div>
-  <div class="actions"><%= p.submit "Submit" %></div><br>
-  <%= link_to "Back to all products", products_path %>
+  <div class="actions submit"><%= p.submit "Submit" %></div><br>
 <% end %>

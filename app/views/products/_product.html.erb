@@ -1,5 +1,7 @@
+<div class='product'>
   <h2><%= link_to product.name, product_path(product) %></h2>
   <h5>$<%= product.formatted_price %></h5> 
   <p><%= product.description %></p>
   <p><%= product.reviews.count %> reviews</p>
   <p><%= link_to "See more…", product_path(product) %></p>
+</div>

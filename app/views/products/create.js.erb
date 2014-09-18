@@ -1,0 +1,3 @@
+$('#all_products').prepend("<%= j(render @product) %>");
+$('#product_form').toggle();
+$('#product_form').find('input:text, textarea').val('');

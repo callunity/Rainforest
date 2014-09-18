@@ -1,14 +1,13 @@
-<% if @product.reviews.count > 0 %>
-  <% @product.reviews.each do |review| %>
-    <p><% if review.user != nil %>
-      <strong><%= link_to ("#{review.user.first_name} #{review.user.last_name}"), user_path(review.user) %></strong><br>
-      <%= review.comment %><br>
-      <em>Added on <%= review.created_at.to_date %></em>
-      <% if review.user == current_user %>
-        <%= link_to "Delete review", [@product, review], :method => :delete %>
-      <% end %></p>
-    <% end %>
-  <% end %>
-<% else %>
-  <p>This product has no reviews yet.</p>
-<% end %>
+<div>
+      <p><% if review.user != nil %>
+        <strong><%= link_to ("#{review.user.first_name} #{review.user.last_name}"), user_path(review.user) %></strong><br>
+        <%= review.comment %><br>
+        <em>Added on <%= review.created_at.to_date %></em>
+        <% if review.user == current_user %>
+          <%= link_to "Delete review", [@product, review], :method => :delete %>
+        <% end %></p>
+      <% end %>
+
+    <!-- <p>This product has no reviews yet.</p> -->
+
+</div>

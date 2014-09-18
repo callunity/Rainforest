@@ -1,0 +1,17 @@
+<%= form_for([product, review], :remote => true) do |f| %>
+  <% if review.errors.any? %>
+    <div class="error_messages">
+      <ul>
+        <% for message in review.errors.full_messages %>
+        <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div> 
+  <% end %>
+
+  <div class="field">
+    <%= f.label :comment %><br>
+    <%= f.text_area :comment %>
+  </div>
+  <div class="actions" id="submit_review"><%= f.submit "Submit" %></div>
+<% end %>

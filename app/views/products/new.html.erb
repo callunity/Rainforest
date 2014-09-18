@@ -1,2 +1,7 @@
 <h1>Add new product</h1>
-<%= render "form" %>
+
+<div id ="add_new">
+  <%= render "form", locals: {product: @product} %>
+</div>
+
+<%= link_to "Back to all products", products_path %>
