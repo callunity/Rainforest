@@ -35,6 +35,9 @@ gem 'pry'
 # Kaminari for pagination
 gem 'kaminari'
 
+# Faker for dummy data
+gem 'faker'
+
 # Use unicorn as the app server
 # gem 'unicorn'
 

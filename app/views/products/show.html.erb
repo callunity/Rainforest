@@ -4,9 +4,7 @@
 
 <h3>Reviews</h3>
 <div id="reviews">
-  <% if reviews.count > 0 %>
-    <%= render @reviews %>
-  <% end %>
+  <%= render @reviews if reviews.count > 0 %>
 </div>
 
 <h4>Add a review:</h4>
