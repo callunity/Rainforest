@@ -32,7 +32,7 @@ $(document).on('ready page:load', function() {
   $('#submit_review').on('click', function(e) {
     e.preventDefault();
 
-    $('#reviews').toggle();
+    
   });
 
 
