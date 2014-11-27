@@ -3,6 +3,7 @@
 This project replicates some of Amazon's functionality. It was an early project which I developed solo as a first foray into RESTful web development. It's pretty simple: Users can add Products and can leave Reviews on other Products. 
 
 Database: sqlite3
+** Run rake db:populate to generate sample Products (for development only)
 
 Possible avenues for future development:
 - Implement some sort of purchase mechanism so that Users can only review Products that they have bought. (Stripe?)
